@@ -1,5 +1,5 @@
 import { WebSocket, WebSocketServer } from "ws";
-
+import { generateUserId } from "../utils/createId.js";
 import registerCreateRoom from "./createRoom.js";
 import registerJoinRoom from "./joinRoom.js";
 import registerLeaveRoom from "./leaveRoom.js";
@@ -12,19 +12,19 @@ export default function registerConnectionHandler(
   ws: WebSocket,
   wss: WebSocketServer
 ) {
-  // Add logic to create user id using utils
+  const user_id = generateUserId(ws);
 
   console.log(
     `
-      New Connection!!!
-      [${new Date().toISOString()}]
-      Total - ${++count}
-      `
+     New Connection!!!
+     [${new Date().toISOString()}]
+     Total - ${++count}
+     `
   );
 
   sendSystemMessage(ws, "Connected to server");
 
-  registerCreateRoom(ws);
+  registerCreateRoom(ws, user_id);
   registerJoinRoom(ws);
   registerLeaveRoom(ws);
   registerSendMessage(ws);

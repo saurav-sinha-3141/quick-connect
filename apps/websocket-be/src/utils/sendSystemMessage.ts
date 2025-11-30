@@ -1,10 +1,10 @@
 import { WebSocket } from "ws";
 
-export default function sendSystemMessage(ws: WebSocket, text: any) {
+export default function sendSystemMessage(ws: WebSocket, payload: any) {
   ws.send(
     JSON.stringify({
       type: "system",
-      text,
+      payload,
       timestamp: new Date().toISOString(),
     })
   );

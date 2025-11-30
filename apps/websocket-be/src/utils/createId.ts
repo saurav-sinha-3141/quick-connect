@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import { WebSocket } from "ws";
+import { user_sockets } from "../state.js";
 
 export function generateRoomId({ length = 9 }: { length: number }): string {
   const pass = Array.from({ length: length }, () => {
@@ -9,8 +10,9 @@ export function generateRoomId({ length = 9 }: { length: number }): string {
   return pass;
 }
 
-export function generateUserId(ws: WebSocket) {
-  return randomUUID();
+export function generateUserId(ws: WebSocket): string {
+  const user_id = randomUUID();
+  user_sockets.set(user_id, ws);
 
-  // Add logic to map client socket and user id
+  return user_id;
 }
